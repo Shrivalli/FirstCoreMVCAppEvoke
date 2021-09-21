@@ -1,4 +1,5 @@
 ﻿using FirstCoreMVCApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,7 @@ namespace FirstCoreMVCApp.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
             return View();
         }
 
@@ -37,17 +39,31 @@ namespace FirstCoreMVCApp.Controllers
         
         [HttpGet]
         public ViewResult Sample()
+        
         {
             initialize();
            // string Fruit = "Apple";
             ViewBag.Fruit = "Cherry";
+            TempData["Fruit"] = "Banana";
+            HttpContext.Session.SetString("UserName","Harry");
             return View();
         }
 
+        [HttpGet]
         public IActionResult Privacy()
         {
+            ViewBag.Name = HttpContext.Session.GetString("UserName");
             return View();
         }
+
+        [HttpPost]
+       [ActionName("Privacy")]
+        public IActionResult Privacy(IFormCollection f)
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

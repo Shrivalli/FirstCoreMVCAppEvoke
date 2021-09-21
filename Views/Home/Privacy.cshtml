@@ -3,5 +3,11 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+<h1> Hi @ViewBag.Name!!!!</h1>
 <p>Use this page to detail your site's privacy policy.</p>
 <h1> this is my privacy page </h1>
+
+<h1> TempData Fruit is @TempData["Fruit"]</h1>
+<form asp-action="Privacy" method="post">
+    <input type="submit" value="Logout"/>
+</form>
